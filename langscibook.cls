@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%      File: langscibook.cls
 %%    Author: Language Science Press (http://langsci-press.org)
-%%      Date: 2018-08-29 13:12 UTC
+%%      Date: 2021-02-17 18:00 CET
 %%   Purpose: This file defines the basic document class
 %%            for books published with Language Science Press.
 %%  Language: LaTeX
@@ -48,7 +48,7 @@
 %   \_ Miscellaneous
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{langscibook}[2020/02/12 Language Science Press]
+\ProvidesClass{langscibook}[2021/02/17 Language Science Press]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %    Early load packages
@@ -64,6 +64,8 @@
 \hbadness=99999 % get rid of underfull box warnings
 \typeout{Warnings are disabled in langscibook.cls for underfull boxes, hyperref, microtype and scrbook package incompatibility, todonotes length and babel/polyglossia csquotes}
 \usepackage{etoolbox}
+\RequirePackage{xparse}
+\usepackage{langsci-affiliations}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Default values
@@ -103,9 +105,14 @@
 \newcommand{\newlineCover}{\\}  % \newline only on cover
 \newcommand{\newlineSpine}{\\}  % \newline only on spine
 \newcommand{\newlineTOC}{\\}    % \newline only in TOC entry
+\newcommand{\affiliation}[1]{}     % A dummy command to process the affiliation info.
 
 \newcommand{\lsSpineTitle}{\@title}
-\newcommand{\lsSpineAuthor}{\@author}
+\newcommand{\lsSpineAuthor}
+  {%
+    \ResolveAffiliations[output affiliation=false, 
+                         output authors font=\lsSpineAuthorFont]{\@author}%
+  }
 \newcommand{\SpineTitle}[1]{\renewcommand{\lsSpineTitle}{#1}}
 \newcommand{\SpineAuthor}[1]{\renewcommand{\lsSpineAuthor}{#1}}
 
@@ -137,6 +144,7 @@
 \newbool{uniformtopskip}
 \newbool{oldstylenumbers}
 \newbool{tblseight}%for chinesefonts in tbls series page
+\newbool{lsISBNTwoDigitAddon}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %     Option handling
@@ -327,7 +335,6 @@
 
 %% standard commands
 \usepackage{langsci-basic}
-\usepackage{langsci-affiliations}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %      Covers
@@ -340,16 +347,13 @@
         \pagestyle{empty}
         \pgfdeclarelayer{lspcls_bg}    % Create a background layer that serves as the canvas for the coloured rectangles.
         \pgfsetlayers{lspcls_bg,main}  % Order the background layer behind the main layer of TikZ.
-        \renewcommand{\and}{, }%
-        \renewcommand{\lastand}{ \& }%
-        \renewcommand{\affiliation}[1]{}
     }
 
     % Fill the canvas for the cover with coloured areas on back and front cover
     % Argument 1: White margin that encompasses the coloured title and backtitle form. Input: 12.34mm
     % Argument 2: Height of the coloured title and backtitle form and of the spine. Input: 12.45cm
     % Argument 3: Width  of the coloured title and backtitle form. Input: 12.45cm
-    \newcommand{\covergeometry}[3]{
+    \newcommand{\covergeometry}[3]{%
         \begin{pgfonlayer}{lspcls_bg} % Draw on the background layer
         \node [ bg, % Draw the coloured background on the front cover
                 left = #1 of current page.east,
@@ -373,7 +377,7 @@
 
     % Generates the content of the back cover
     % Argument 1: Text width, corresponding to Argument 1 of \frontcovertoptext
-    \newcommand{\backcover}[1]{
+    \newcommand{\backcover}[1]{%
     \node [ font=\lsBackTitleFont,
             right,
             below right = 10mm and 7.5mm of CoverColouredRectangleBack.north west,
@@ -384,24 +388,26 @@
             text width=#1,
             align=justify
             ] {\color{white}\parindent=15pt\lsBackBody};
-    \node [  below right = 192.5mm and 97.5mm of CoverColouredRectangleBack.north west,
-            text width=4cm] {%
-        \colorbox{white}{
-            \begin{pspicture}(0,0)(4.1,1in)
-                \psbarcode[transx=.4,transy=.3]{\lsISBNcover}{includetext height=.7}{isbn}%
-            \end{pspicture}
-        }
+    \node [ above left = 10mm and 7.5mm of CoverColouredRectangleBack.south east ] {%
+        \colorbox{white}{%
+            \ifbool{lsISBNTwoDigitAddon}{%
+              \begin{pspicture}(0,0)(5.25,1in)
+                \psbarcode[transx=.4,transy=.3]{\lsISBNcover\ \lsISBNhardcoverTwoDigitAddon}{includetext guardwhitespace height=.7}{isbn}
+              \end{pspicture}%
+            }{%
+              \begin{pspicture}(0,0)(4.15,1in)
+                  \psbarcode[transx=.4,transy=.3]{\lsISBNcover}{includetext height=.7}{isbn}%
+              \end{pspicture}%
+            }%
+        }%
         };
     }
 
     % Generates the content on the front cover, including title, author, subtitle. See below for remaining commands
     % Argument 1: Text width on the front cover. Input: 12.34mm
     % Argument 2: Font size on the front cover. Adjust to compensate varying text width. Input: 12.34pt
-    \newcommand{\frontcovertoptext}[3][white]{
-    \renewcommand{\and}{\\}
-    \renewcommand{\lastand}{\\}
+    \newcommand{\frontcovertoptext}[3][white]{%
     \renewcommand{\newlineCover}{\\}
-
     \node [ font=\lsCoverTitleFont,
             below right = 10mm and 7.5mm of CoverColouredRectangleFront.north west,
             text width=#2,
@@ -418,7 +424,9 @@
             \ResolveAffiliations[output in groups=false, 
                                  output affiliation=false, 
                                  output authors font=\lsCoverAuthorFont,
-                                 separator between two=\\]
+                                 separator between two=\\,
+                                 separator between multiple=\\,
+                                 separator between final two=\\]
                                  {\@author}\par}};
     \else % If yes, create a node for subtitle and author
     \node [ font=\lsCoverSubTitleFont,
@@ -436,13 +444,15 @@
             \ResolveAffiliations[output in groups=false, 
                                  output affiliation=false, 
                                  output authors font=\lsCoverAuthorFont,
-                                 separator between two=\\]
+                                 separator between two=\\,
+                                 separator between multiple=\\,
+                                 separator between final two=\\]
                                  {\@author}\par}};
     \fi
     }
 
     % Generates the bottom half of the front cover content: series, series number, logo.
-    \newcommand{\coverbottomtext}[1][white]{
+    \newcommand{\coverbottomtext}[1][white]{%
     \node [ above right = 18.5mm and -.1mm of CoverColouredRectangleFront.south west,
             rectangle,
             fill=white,
@@ -741,7 +751,7 @@
       [  
         entrynumberformat=\addfontfeature{Numbers={Monospaced,Lining}},
         pagenumberformat=\addfontfeature{Numbers={Monospaced,Lining}}\bfseries,
-        raggedentrytext=true,
+        raggedentrytext=true
       ]
       {tocline}
       {chapter}
@@ -758,7 +768,11 @@
     % In collected volumes, adjust the spacing for unnumbered chapters
     \ifbool{collection}{
     \BeforeStartingTOC[toc]{\SetupAffiliations{output affiliation=false,
-                                               output authors font=\normalfont}}
+                                               output authors font=\normalfont,
+                                               separator between two={~\&~},
+                                               separator between multiple={,~},
+                                               separator between final two={~\&~}}
+                                               }
       \renewcommand{\addtocentrydefault}[3]{%
         \Ifstr{#2}{}{%
           \addcontentsline{toc}{#1}{\protect\numberline{~}#3}%
@@ -887,9 +901,6 @@
     \pgfdeclarelayer{lspcls_bg}    % Create a background layer that serves as the canvas for the coloured rectangles.
     \pgfsetlayers{lspcls_bg,main}  % Order the background layer behind the main layer of TikZ.
     \thispagestyle{empty}
-    \renewcommand{\and}{, }%
-    \renewcommand{\lastand}{ \& }%
-    \renewcommand{\affiliation}[1]{}
     \begin{tikzpicture}[remember picture, overlay,bg/.style={outer sep=0}]
         \begin{pgfonlayer}{lspcls_bg}
             \node [ bg,
@@ -913,9 +924,6 @@
     \pgfdeclarelayer{lspcls_bg}    % Create a background layer that serves as the canvas for the coloured rectangles.
     \pgfsetlayers{lspcls_bg,main}  % Order the background layer behind the main layer of TikZ.
     \thispagestyle{empty}
-    \renewcommand{\and}{, }%
-    \renewcommand{\lastand}{ \& }%
-    \renewcommand{\affiliation}[1]{}%
     \begin{tikzpicture}[remember picture, overlay,bg/.style={outer sep=0}]
         \begin{pgfonlayer}{lspcls_bg}
             \node [ bg,
@@ -936,9 +944,6 @@
     \pgfdeclarelayer{lspcls_bg}    % Create a background layer that serves as the canvas for the coloured rectangles.
     \pgfsetlayers{lspcls_bg,main}  % Order the background layer behind the main layer of TikZ.
     \pagestyle{empty}
-    \renewcommand{\and}{, }%
-    \renewcommand{\lastand}{ \& }%
-    \renewcommand{\affiliation}[1]{}
     \newcommand{\lsISBNcover}{\lsISBNdigital}
         \begin{tikzpicture}[remember picture, overlay,bg/.style={outer sep=0}]
         \begin{pgfonlayer}{lspcls_bg}
@@ -1020,7 +1025,15 @@
 \newcommand{\ISBNdigital}[1]{\renewcommand{\lsISBNdigital}{#1}}
 \newcommand{\ISBNsoftcover}[1]{\renewcommand{\lsISBNsoftcover}{#1}}
 \newcommand{\ISBNsoftcoverus}[1]{\renewcommand{\lsISBNsoftcoverus}{#1}}
-\newcommand{\ISBNhardcover}[1]{\renewcommand{\lsISBNhardcover}{#1}}
+\NewDocumentCommand { \ISBNhardcover } { o m }
+  {%
+    \renewcommand{\lsISBNhardcover}{#2}%
+    \IfValueT{#1}
+    {%
+      \booltrue{lsISBNTwoDigitAddon}
+      \newcommand{\lsISBNhardcoverTwoDigitAddon}{#1}
+    }
+  }
 
 \newcommand{\URL}[1]{\renewcommand{\lsURL}{#1}}
 \newcommand{\Series}[1]{\renewcommand{\lsSeries}{#1}}
@@ -1055,7 +1068,9 @@
   }
 
 \newcommand{\lsImpressumCitationText}
-  {
+  {%
+    \renewcommand{\newlineCover}{}%
+    \renewcommand{\newlineSpine}{}%
     \fullciteImprint{langsci-current-book}
   }
 
@@ -1704,12 +1719,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \newcommand{\abstract}[1]{\renewcommand{\lsCollectionPaperAbstract}{#1}}
 \newcommand{\ChapterDOI}[1]{\renewcommand{\lsChapterDOI}{#1}}
 
-
-%% inside \author:
-\renewcommand{\and}{}
-\newcommand{\lastand}{}
-\newcommand{\affiliation}[1]{}
-
 %% to be used below chapter titles
 \newcommand{\chaptersubtitle}[1]{
   \vspace*{-2ex}
@@ -1719,15 +1728,12 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
   \@afterheading
 }
 
-
-
 \ifbool{collection}{
     \notbool{biblatex}{
             \ClassError{langsci/langscibook}{Collection option not compatible with plain BibTeX. Please use biblatex option}{}
     }{}
 
     \AtBeginDocument{% for the citation in the footer
-            \onlyAuthor
             \renewcommand{\newlineCover}{}
             \renewcommand{\newlineSpine}{}
             \edef\lsCollectionTitle{\@title\ifx\@subtitle\empty\else{: \@subtitle}\fi}% \edef immediately expands \@title
@@ -1779,19 +1785,12 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 }{}
 
 \newcommand{\lsCollectionMetadataToBibliography}[1]{%
-  %% preprocessing of author/editor names
-  \onlyAuthor
   \renewcommand{\newlineCover}{}
   \renewcommand{\newlineSpine}{}
-  \renewcommand{\newlineTOC}{}
-  \StrSubstitute{\@author}{,}{ and }[\authorTemp]
-  \StrSubstitute{\authorTemp}{\&}{ and }[\authorTemp]
-  \StrSubstitute{\lsCollectionEditor}{,}{ and }[\editorTemp]
-  \StrSubstitute{\editorTemp}{\&}{ and }[\editorTemp]
-  
+  \renewcommand{\newlineTOC}{}  
   %% write bib entry to file
-  \immediate\write\tempfile{@incollection{#1,author={\authorTemp},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\editorTemp},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},keywords={withinvolume}}}
-  \immediate\write\tempfile{@incollection{#1footer,author={\authorTemp},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\editorTemp},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},options={dataonly=true}}}
+  \immediate\write\tempfile{@incollection{#1,author={\@author},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\lsCollectionEditor},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},keywords={withinvolume}}}
+  \immediate\write\tempfile{@incollection{#1footer,author={\@author},title={{\expandonce{\titleTemp}}},booktitle={{\expandonce{\lsCollectionTitle}}},editor={\lsCollectionEditor},publisher={Language Science Press.},Address={Berlin},year={\lsYear},pages={\lsCollectionPaperFirstPage --\lsCollectionPaperLastPage},doi={\lsChapterDOI},options={dataonly=true}}}
 }
 
 \newcommand{\titleToHead}{}
@@ -1804,12 +1803,6 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
   \if@mainmatter%Only send the chapter num to head if in mainmatter.
     \thechapter\hspace{0.5em}\titleToHead\else\titleToHead
   \fi
-}
-  
-\newcommand{\lsCollectionPaperHeaderAuthor}{{%
-  \renewcommand{\newlineCover}{}%
-  \renewcommand{\newlineTOC}{}%
-  \onlyAuthor\@author}
 }
 
 \newcommand{\includepaper@body}{%
@@ -1826,11 +1819,10 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
         \renewcommand{\maketitle}{%
             % With \setchapterpreamble from scrbook, we ensure that the author(s)
             % and their affiliation(s) are part of the \chapter block.
-            \setchapterpreamble[u]{\ResolveAffiliations{\@author}}
+            \setchapterpreamble[u]{\ResolveAffiliations{\@author}\\}
             \chapter
             [tocentry={\titleToToC~\newline{\normalfont\ResolveAffiliations{\@author}}}]
             {\titleTemp}
-            \vspace{\baselineskip}
             \begin{quote}
                 \small\lsCollectionPaperAbstract
             \end{quote}
@@ -1850,23 +1842,15 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
         }
         \ohead{}
         \lehead{\ResolveAffiliations[output affiliation=false,
-                                     output authors font=\normalfont\slshape]{\@author}}
+                                     output authors font=\normalfont\slshape,
+                                     separator between two={~\&~},
+                                     separator between multiple={,~},
+                                     separator between final two={~\&~}
+                                    ]{\@author}}
         \rohead{\lsCollectionPaperHeaderTitle}
         % The following ensure that a chapter is treated as a heading, which
         % controls page break penalties and indentation following the heading.
         \@afterindentfalse\@afterheading
-}
-
-\newcommand{\onlyAuthor}{%    % collection paper
-    \renewcommand{\and}{, }%
-    \renewcommand{\lastand}{ \& }%
-    \renewcommand{\affiliation}[1]{}
-}
-
-\newcommand{\AuthorAffiliation}{
-    \renewcommand{\and}{\newline\newline}
-    \renewcommand{\lastand}{\newline\newline}
-    \renewcommand{\affiliation}[1]{\\[0.5ex]{\normalsize ##1}}
 }
 
 \newcommand{\lsCollectionPaperFooterTitle}{\titleTemp}
@@ -2054,10 +2038,20 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 \newlength{\LSPTmp}
 \ifbool{uniformtopskip}{}{% Donald Arseneau's automatic handling of page breaking from comp.text.tex: https://groups.google.com/d/topic/comp.text.tex/3eehwzortPg/discussion
     % With the optimisations from the memoir class. The memoir class has relative instead of absolute values.
+    \newlength{\lsSaveValueTopSkip}
+    \lsSaveValueTopSkip=\topskip
+    \let\lsSaveValueTextTop\@texttop
+    \let\lsSaveValueTextBottom\@textbottom
+    \def\restorebottom{%
+      \topskip=\lsSaveValueTopSkip
+      \let\@texttop\lsSaveValueTextTop
+      \let\@textbottom\lsSaveValueTextBottom
+    }
+    
     \def\sloppybottom{%
-    \def\@textbottom{\vskip \z@ \@plus.0001fil \@minus .95\topskip}%
-    \topskip=1\topskip \@plus 0.625\topskip \@minus .95\topskip%
-    \def\@texttop{\vskip \z@ \@plus -0.625\topskip \@minus -0.95\topskip}%
+      \def\@textbottom{\vskip \z@ \@plus.0001fil \@minus .95\topskip}%
+      \topskip=1\topskip \@plus 0.625\topskip \@minus .95\topskip%
+      \def\@texttop{\vskip \z@ \@plus -0.625\topskip \@minus -0.95\topskip}%
     }
     \sloppybottom
 }

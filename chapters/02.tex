@@ -30,13 +30,13 @@ Our objectives with these experiments are threefold:
 \item Study translators perception as a prospective measure of PE effort.
 \end{itemize}
 
-In Section \ref{Previouswork}, we review previous work comparing SMT and NMT approaches. In Section \ref{MTsystemsandtrainingcorpus} we describe the MT systems and the training corpus used. In Section~\ref{AutomaticevaluationoftheMTsystems} we include the automatic evaluation of the MT systems used. We give details about the methodology used for our experiments in Section~\ref{Experiments}. We explain the results obtained in Section \ref{Results} and finally, we state the main conclusions and our plans for future work in Section \ref{Conclusionsandfuturework}.
+In Section \ref{Previouswork}, we review previous work comparing SMT and NMT approaches. In Section \ref{MTsystemsandtrainingcorpus} we describe the MT systems and the training corpus used. In Section~\ref{AutomaticevaluationoftheMTsystems} we include the automatic evaluation of the MT systems used. We give details about the methodology used for our experiments in Section~\ref{Experiments}. We explain the results obtained in Section \ref{Results} and, finally, we state the main conclusions and our plans for future work in Section \ref{Conclusionsandfuturework}.
 
 \section{Previous work} \label{Previouswork}
 One of the first complete papers studying the impact of SMT and NMT in PE was Bentivogli et al. (\citeyear{Bentivogli2016}). In it, they carry out a small scale study on post-editing
 NMT and SMT outputs of English to German translated TED talks. They conclude that NMT generally decreases the PE effort, but degrades faster than SMT with sentence length. One of the main strengths of NMT is the reodering of the target sentence.
 
-Wu et al. (\citeyear{Wu2016GooglesTranslation}) evaluate the quality of NMT and SMT, in this case using BLEU \citep{Papineni2002} and human scores for machine-translated Wikipedia entries. Results show that NMT systems outperform and improve the quality of MT results. Other studies have confirmed this diagnostics \citep{Junczys,IsabelleCF17}, as have the results of the automatic PE tasks at the conference on statistical machine translation \citep{Bojar2016,Bojar2017}. 
+Wu et al. (\citeyear{Wu2016GooglesTranslation}) evaluate the quality of NMT and SMT, in this case using BLEU \citep{Papineni2002} and human scores for machine-translated Wikipedia entries. Results show that NMT systems outperform and improve the quality of MT results. Other studies have confirmed this diagnostics \citep{Junczys,IsabelleCF17}, as have the results of the automatic PE tasks at the Conference on Machine Translation \citep{Bojar2016,Bojar2017}. 
 
 \citet{Toral2017} broaden the scope of Bentivogli et al. (\citeyear{Bentivogli2016}) adding different language combinations and metrics, and they conclude that although NMT yields better quality results in general, it is negatively affected by sentence length, and the improvement of the results is not always perceivable in all language pairs. 
 
@@ -199,7 +199,7 @@ NMT & 2.46 & 2.50 \\
 \end{table}
 
 \subsection{PE time and technical effort}
-Results for the PE task by professional translators have been grouped in temporal effort and technical effort (see Tables \ref{temporal post-editing} and \ref{technical post-editing}). In both cases, the mean for PBSMT is higher, though only technical effort shows a statistically significant difference (in a $t$-test with a $p$-value of 0.002054). It is worth highlighting that there was a considerable difference in time and keylogging between the translators, especially for the two professionals who post-edited PBSMT (as indicated by the std. deviation in Tables \ref{temporal post-editing} and \ref{technical post-editing}).
+Results for the PE task by professional translators have been grouped in temporal effort and technical effort (see Tables \ref{temporal post-editing} and \ref{technical post-editing}). In both cases, the mean for PBSMT is higher, though only technical effort shows a statistically significant difference (in a $t$-test with a $p$-value of 0.002054). It is worth highlighting that there was a considerable difference in time and keylogging between the translators, especially for the two professionals who post-edited PBSMT (as indicated by the standard deviation in Tables \ref{temporal post-editing} and \ref{technical post-editing}).
 
 \begin{table}
 \begin{tabularx}{.66\textwidth}{Xrr}
