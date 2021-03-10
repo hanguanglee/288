@@ -1807,9 +1807,9 @@ Storage and cataloguing done by \storageinstitution\\[3ex]
 
 \newcommand{\includepaper@body}{%
         \RenewDocumentCommand{\title}{O{##2} m O{##2}}{
-            \renewcommand{\titleToHead}{##1}
+            \renewcommand{\titleToHead}{\def\newlineCover{}\def\newlineTOC{}##1}
             \renewcommand{\titleTemp}{##2}
-            \renewcommand{\titleToToC}{##3}
+            \renewcommand{\titleToToC}{\def\newlineCover{}##3}
         }
         \renewcommand{\author}[1]{\renewcommand{\@author}{##1}}
         \renewcommand*{\thesection}{\arabic{section}}

@@ -204,8 +204,8 @@ The differences from \citet{herbig2019mt} for the skin features are as follows: 
 %One should note that all sensors included in our analysis do not significantly hinder the translation process or feel uncomfortable. This is also the reason why we did not include two-finger GSR sensors, head-mounted eye trackers, or EEG sensors.
 
 % Normalization and transform from signal to indiv. feature
-\subsubsection{Data normalization and segment-wise feature calculation}
-\label{sec:datanorm}
+\subsubsection{Data normalization and segment-wise feature calculation}\label{sec:datanorm}\largerpage
+
 The features described above can be categorized into two classes: \textit{global features} and \textit{continuous features}.
 
 By \textsc{global features} we mean features that yield only one value per segment: this class comprises subjective measures (\subjCL{}), time measures (\petime{}, \lnpetime{}), text measures (\bleu{}, \hbleu{}, \ter{}, \hter{}, \sentencelength{}), keyboard measures (\apr{}, \pwr{}), the amount-based eye features (\blinkamount{}, \fixamount{}, Norm\-Blink\-Amount, \normfixamount{}), and all Ledalab skin features. However, one should note that the time and text features here really only can be calculated on the whole segment, while the amount-based eye features or the skin-based Ledalab features could also be calculated over shorter periods of time.
@@ -215,7 +215,7 @@ Apart from these global features, all other features are basically just a \texts
 % Data filtering
 We manually inspected the data distribution per segment and participant for outliers and overall data quality. First of all, the Empatica E4 sensor, which claims clinical quality observations, indeed shows the fewest outliers and nicely bell shaped data distributions. In contrast, the Polar H7 sports sensor and the Microsoft Band v2 showed much more noisy data. Therefore, we filtered values according to visual inspection and related literature: data above 100,000\,kΩ for the raw Microsoft Band GSR was removed. Furthermore, Polar \rmssd{}{} and \sdnn{}{} values above 1000 \citep{van2018normal} as well as \hr{Polar}{} and \rr{Polar}{} samples which fall outside the acceptable 50--120 beats per minute or 500--1200\,ms ranges were ignored \citep{shaffer2017overview}.
 
-\subsection{Text and apparatus used for the experiment}
+\subsection{Text and apparatus used for the experiment}\largerpage
 % Which text
 Apart from the sensors, we need to generate translations for our experiments that contain realistic error types. For this, we use the same 30 sentences as \citet{herbig2019mt}, which are chosen as follows: % and also randomize the sentence order to avoid ordering effects.
 A neural MT system \citep{Gehring:2017:fair} was trained on the English-German parallel data from the WMT 2017 news translation task and provided translation candidates on the respective test data set. % where it achieved a test score of 29.5 in \bleu{} and 60.1 in \ter{}.

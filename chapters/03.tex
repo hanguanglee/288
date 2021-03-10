@@ -98,7 +98,7 @@ Semantics & \textsc{sm}.\oldstylenums{11} & Confusion of sense (output translati
 The error taxonomy of \citet{Vilar2006} was used as a basis for the error annotation due to its explicity, clarity and appropriate degree of granularity. However, further more extensive taxonomies, such as the multidimensional quality metrics (\textsc{mqm}) framework can be also used for the analysis. This would be particularly useful in case of examining fine-grained or more specific types of errors.
 
 
-\subsection{Human evaluation}
+\subsection{Human evaluation}\largerpage
 
 The goal of the human evaluation is to compare the content and style quality of the \textsc{mt} in the \textsc{lvc} and \textsc{bvc} scenarios. Following the quality definition of \citet{Hutchins1992}, the \textit{content quality} is the extent to which the translation reflects the information in the source text accurately; and the extent to which the translation is easy to understand (ibid.). The \textit{style quality} is the extent to which the translation sounds natural and idiomatic in standard written English, is appropriate for the intention of its content (ibid.) as well as presented clearly in terms of orthography. The definition covers the orthography as an instrument for presenting the content in an adequate way that serves its intention. 
 
@@ -107,7 +107,7 @@ Based on these definitions, the content quality (\textsc{cq}) covers the criteri
 The human evaluation \figref{marzouk:fig1} consisted of
 (1) evaluating the \textsc{sq} and \textsc{cq} of the \textsc{mt} (*) on two 5-point Likert scales;
 (2) selecting the relevant quality criteria that justify the assigned quality scores: accuracy and clarity under the \textsc{cq}; idiomacy, appropriateness to the content intention as the content well as correctness and clarity of the orthographic presentation under the \textsc{sq};
-(3) providing the word or part of the translation relevant to each chosen criterion; (4) where many modifications were necessary, the participant had to enter an alternative translation for the whole sentence.
+(3) providing the word or part of the translation relevant to each chosen criterion; (4) where many modifications were necessary, the participant had to enter an alternative translation for the whole sentence.\largerpage[2]
 
 
 \begin{figure}
@@ -121,7 +121,7 @@ Concerning the participants, different studies recommend recruiting more\linebre
 
 Regarding the test procedure, the analysis of the \textsc{lvc}s and \textsc{bvc}s was part of a large-scale study that aimed to examine different German Controlled Language rules \citep{Marzouk2019}. Within the scope of the study, each participant evaluated in total 1,100 \textsc{mt} sentences that were randomized and split into 44 tests (the analysis of the \textsc{lvc} vs. \textsc{bvc} was a subset of this dataset). Each participant had the opportunity to choose whether to rate one, two or three tests per day, depending on his or her availability. The basic requirement was to evaluate at least one test daily, thus avoiding interruptions that could possibly have a negative effect on the intra-rater agreement. In addition, the participants were asked to take a break between the tests. The 44 tests were sent in a different randomized order to the participants (e.g. the 1st participant received test 40, test 8, test 5 consecutively). A decreasing motivation over a 3--4 week evaluation period is unavoidable. Therefore, this randomization ensured that no particular sentences were evaluated by all participants at the end of the evaluation. The tester received the answered tests every day and checked them for completeness (i.e. all sentences were rated and commented on if necessary). In case of any missing data, the participant was asked to complete them, then he or she received the new tests for the next day.
 
-\subsection{Automatic evaluation }
+\subsection{Automatic evaluation}\largerpage
 
 
 The alternative translation obtained from the human evaluation acted as a reference translation for the automatic evaluation metrics (\textsc{aem}s) in order to compare their scores in the \textsc{lvc} and \textsc{bvc} scenarios. Two reference translations per sentence were randomly selected for the comparison. The study applied the evaluation metrics \textsc{ter}base and h\textsc{lepor}. The former is a basic edit distance metric that calculates the minimum number of edits needed to change the evaluated \textsc{mt} so that it exactly matches the reference translation and works without stemming, synonymy lookup and paraphrase support \citep{Snover2006,Gonzalez2014}. It was necessary to consider the use of synonyms as an edit, as the participants quite often recommended the use of a certain synonym while evaluating the translation accuracy. At the same time, h\textsc{lepor} was applied as one of the advanced metrics that has proven to have a state-of-the-art correlation with human evaluation compared with metrics like \textsc{bleu}, \textsc{ter}, and \textsc{meteor} among others \citep{Han2013}. The calculation model of h\textsc{lepor} is based on three factors: an enhanced length penalty, an $n$-gram position difference penalty and the harmonic mean of precision and recall (ibid.).
@@ -144,7 +144,6 @@ Comparing the \textsc{lvc} and \textsc{bvc} scenarios (\figref{marzouk:fig2}) sh
             axis lines*=left,
             width  = .7\textwidth,
             height = .3\textheight,
-            nodes near coords,
             xlabel={\%},
             symbolic y coords={%
                 {{FF: LVC \& BVC false}},
@@ -155,6 +154,7 @@ Comparing the \textsc{lvc} and \textsc{bvc} scenarios (\figref{marzouk:fig2}) sh
             ytick=data,
             tick label style={font=\footnotesize},
             nodes near coords,
+            nodes near coords style={font=\footnotesize},
             nodes near coords align={horizontal},
             ytick=data,
             ]
@@ -190,16 +190,16 @@ Furthermore, the Spearman test was conducted to investigate the correlation betw
 
 
 \subsection{Comparison of the impact of replacing the \textsc{lvc} with the \textsc{bvc} at \textsc{mt} system level}
-So far, the results show that the \textsc{mt} of \textsc{bvc}s had a significant higher quality in terms of human scores of the \textsc{sq} and \textsc{cq} as well as \textsc{aem}s scores. Subsequently, an analysis at \textsc{mt} system level was conducted in order to explore which \textsc{mt} systems exhibited these higher quality levels. The general positive impact of using \textsc{bvc}s instead of \textsc{lvc}s on the \textsc{mt} output at system level is shown in \figref{marzouk:fig3} and \figref{marzouk:fig4}.\largerpage[-1]
+So far, the results show that the \textsc{mt} of \textsc{bvc}s had a significant higher quality in terms of human scores of the \textsc{sq} and \textsc{cq} as well as \textsc{aem}s scores. Subsequently, an analysis at \textsc{mt} system level was conducted in order to explore which \textsc{mt} systems exhibited these higher quality levels. The general positive impact of using \textsc{bvc}s instead of \textsc{lvc}s on the \textsc{mt} output at system level is shown in \figref{marzouk:fig3} and \figref{marzouk:fig4}.
 
 
 
-\begin{figure}[H]
+\begin{figure}[p]
 	\includegraphics[width=\textwidth]{figures/figure3.png}
     \caption{Style and content quality in case of using \textsc{lvc}s as opposed to \textsc{lvc}s\label{marzouk:fig3}}
 \end{figure}
 
-\begin{figure}[H]
+\begin{figure}[p]
 % 	\includegraphics[width=\textwidth]{figures/figure4.png}
 
 	  \begin{tikzpicture}

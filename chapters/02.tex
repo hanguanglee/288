@@ -202,27 +202,27 @@ NMT & 2.46 & 2.50 \\
 Results for the PE task by professional translators have been grouped in temporal effort and technical effort (see Tables \ref{temporal post-editing} and \ref{technical post-editing}). In both cases, the mean for PBSMT is higher, though only technical effort shows a statistically significant difference (in a $t$-test with a $p$-value of 0.002054). It is worth highlighting that there was a considerable difference in time and keylogging between the translators, especially for the two professionals who post-edited PBSMT (as indicated by the standard deviation in Tables \ref{temporal post-editing} and \ref{technical post-editing}).
 
 \begin{table}
-\begin{tabularx}{.66\textwidth}{Xrr}
+\begin{floatrow}\captionsetup{margin=.1\textwidth}
+\ttabbox[.5\textwidth]{%
+\begin{tabular}{lrr}
 \lsptoprule
 {System} & {Mean} & $\SD$\\
 \midrule
 PBSMT & 88.75 & 44.59\\
 NMT & 79.25 & 33.43\\
 \lspbottomrule
-\end{tabularx}
-\caption{\label{temporal post-editing} Temporal PE effort (secs/segment).}
-\end{table}
-
-\begin{table}
-\begin{tabularx}{.66\textwidth}{Xrr}
+\end{tabular}}{\caption{\label{temporal post-editing} Temporal PE effort (secs/segment).}}%
+\ttabbox[.5\textwidth]{%
+\begin{tabular}{lrr}
 \lsptoprule
 {System} & {Mean} & $\SD$\\
 \midrule
 PBSMT & 130.68 & 39.63\\
 NMT & 54.99 & 16.90\\
 \lspbottomrule
-\end{tabularx}
-\caption{\label{technical post-editing} Technical effort (keystrokes/segment).}
+\end{tabular}}
+{\caption{\label{technical post-editing} Technical effort (keystrokes/segment).}}
+\end{floatrow}
 \end{table}
 
 \section{Conclusions and future work} \label{Conclusionsandfuturework}
