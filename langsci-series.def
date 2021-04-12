@@ -10,6 +10,7 @@
 \newcommand{\cam}{cam}
 \newcommand{\cib}{cib}
 \newcommand{\cfls}{cfls}	%Conceptual Foundation of the Language Sciences
+\newcommand{\cogl}{cogl}	%SIDL-CoGL
 \newcommand{\classics}{classics}
 \newcommand{\cmle}{cmle}	%Computational Models of Language Evolution
 \newcommand{\eotms}{eotms}
@@ -23,6 +24,7 @@
 \newcommand{\ogs}{ogs}		%Open Generative Syntax
 \newcommand{\osl}{osl}		%Open Slavic Linguistics
 \newcommand{\pmwe}{pmwe}		%Phraseology and Multi-Word Expressions
+\newcommand{\rcg}{rcg} %
 \newcommand{\scl}{scl}
 \newcommand{\sidl}{sidl}
 \newcommand{\silp}{silp}	%Studies in Laboratory Phonology
@@ -39,6 +41,22 @@
 \ifx\lsSeries\algad
 	\newcommand{\lsSeriesTitle}{African Language Grammars \newlineCover and Dictionaries}
 	\newcommand{\lsSeriesColor}{lsLightOrange}
+	\renewcommand{\lsISSN}{2512-4862}
+	\renewcommand{\lsSeriesText}{
+            Chief Editor:    Adams Bodomo \\
+            Editor:        Firmin Ahoua
+
+            \bigskip
+
+            In this series:
+
+            \begin{enumerate}
+            \item Schrock, Terrill B. The Ik language: Dictionary and grammar sketch.
+            \item Brindle, Jonathan. A dictionary and grammatical outline of Chakali.
+            \item Friesen, Dianne. A grammar of Moloko.
+            \item Ali, Mark, Scott Grimm \& Adams Bodomo. A dictionary and  grammatical sketch of Dagaare.
+            \end{enumerate}
+        }
 \fi
 \ifx\lsSeries\calseries %\cal is already taken as a command
 	\newcommand{\lsSeriesTitle}{Contemporary African Linguistics}
@@ -83,6 +101,7 @@
 
         \begin{enumerate}
           \item Lucas, Christopher \& Stefano Manfredi (eds.). Arabic and contact-induced change.
+          \item Pinto, Jorge \& Nélia Alexandre (eds.).  Multilingualism and third language acquisition: Learning and teaching trends.
           % % \item Hamikov.
           % % \item Sánchez Moreano, Santiago \& Élodie Blestel. Prácticas lingüísticas heterogéneas: Nuevas perspectivas para el estudio del español en contacto con lenguas amerindias.
         \end{enumerate}
@@ -92,7 +111,28 @@
 \ifx\lsSeries\cib
 	\newcommand{\lsSeriesTitle}{Current Issues in Bilingualism}
 	\newcommand{\lsSeriesColor}{lsLightGreen}
-% 	\renewcommand{\lsISSN}{}
+	\renewcommand{\lsISSNelectronic}{2747-9927}
+ 	\renewcommand{\lsISSNprint}{2747-9919} 
+ 	\renewcommand{\lsSeriesText}{
+        {\large  Current Issues in Bilingualism}
+
+        \bigskip
+
+        Editors:     Andrea C. Schalley (Karlstad University, Sweden) [editor-in-chief],\\
+    M Carmen Parafita Couto (Leiden University, Netherlands) [editor-in-chief],\\
+    Susana Eisenchlas (Griffith University, Australia),\\
+    Galina Putjata (Europa-Universität Flensburg, Germany),\\
+    Jorge Valdés Kroff (University of Florida, USA).
+
+
+        \bigskip
+
+        In this series:
+
+        \begin{enumerate}
+          \item Shim, Ji Young. OV and VO variation in code-switching.
+        \end{enumerate}
+        }
 \fi
 \ifx\lsSeries\cfls
 	\newcommand{\lsSeriesTitle}{Conceptual Foundations of \newlineCover Language Science}
@@ -150,6 +190,41 @@
             \end{enumerate}
 
             }
+\fi
+\ifx\lsSeries\cogl
+	\newcommand{\lsSeriesTitle}{Comprehensive Grammar Library}
+	\newcommand{\lsSeriesColor}{lsNightBlue}
+	\renewcommand{\lsSeriesText}{
+            {\large Comprehensive Grammar Library}
+
+            \bigskip
+            Editor: Martin Haspelmath
+
+            \bigskip
+            In this series:
+
+            \begin{enumerate}
+            \item Jacques, Guillaume. A grammar of Japhug.
+            \end{enumerate}
+
+
+            This  series grew out of  the grammars published in \textit{Studies in Diversity Linguistics}, which are proudly mentioned:
+
+            \begin{enumerate}
+            \item[4.] Berghäll, Liisa. A grammar of Mauwake.
+            \item[5.] Wilbur, Joshua. A grammar of Pite Saami.
+            \item[7.] Schackow, Diana.    A grammar of Yakkha.
+            \item[8.] Liljegren, Henrik. A grammar of Palula.
+            \item[9.] Shimelman, Aviva. A grammar of Yauyos Quechua.
+            \item[11.] Kluge, Angela. A grammar of Papuan Malay.
+            \item[12.] Kieviet, Paulus. A grammar of Rapa Nui.
+            \item[22.] Döhler, Christian. A grammar of Komnzo.
+            \item[23.] Yakpo, Kofi. A grammar of Pichi.
+            \end{enumerate}
+
+
+            }
+% 	\renewcommand{\lsISSN}{}
 \fi
 \ifx\lsSeries\classics
 	\newcommand{\lsSeriesTitle}{Classics in Linguistics}
@@ -225,7 +300,8 @@
             \item Bonami, Olivier, Gilles Boyé, Georgette Dal, Hélène Giraudo \& Fiammetta Namer. The lexeme in descriptive and theoretical morphology.
             \item Guzmán Naranjo, Matías. Analogical classification in formal grammar.
             \item Flick, Johanna. Die Entwicklung des Definitartikels im Althochdeutschen: Eine kognitiv-linguistische Korpusuntersuchung.
-            \item Zinova, Yulia. Russian verbal prefixation: A frame semantic analysis.
+            \item Crysmann, Berthold \& Manfred Sailer (eds.). One-to-many relations in morphology, syntax, and semantics.
+            %%%\item Zinova, Yulia. Russian verbal prefixation: A frame semantic analysis.
             \end{enumerate}
             }
 \fi
@@ -487,6 +563,15 @@
 
             }
 \fi
+\ifx\lsSeries\rcg
+	\newcommand{\lsSeriesTitle}{Research on Comparative Grammar}
+	\newcommand{\lsSeriesColor}{lsDarkOrange}
+	\renewcommand{\lsISSNelectronic}{ } %online
+	\renewcommand{\lsISSNprint}{} %Print
+	\renewcommand{\lsSeriesText}{
+            {\large Research on Comparative Grammar }
+         }
+\fi
 \ifx\lsSeries\scl
 	\newcommand{\lsSeriesTitle}{Studies in Caribbean Languages}
 	\newcommand{\lsSeriesColor}{lsDarkOrange}
@@ -677,12 +762,12 @@
 
             Editors: Oliver Czulo (Universität Leipzig),
             Silvia Hansen-Schirra (Johannes Gutenberg-Universität Mainz),
-            Reinhard Rapp (Johannes Gutenberg-Universität Mainz)
+            Reinhard Rapp (Hochschule Magdeburg-Stendal),
+            Mario Bisiada (Universitat Pompeu Fabra)
 
             \bigskip
 
             In this series:
-            
             \begin{enumerate}\itemsep=0pt
             \item Fantinuoli, Claudio \& Federico Zanettin (eds.). New directions in corpus-based translation studies.
             \item Hansen-Schirra, Silvia \& Sambor Grucza (eds.). Eyetracking and Applied Linguistics.
