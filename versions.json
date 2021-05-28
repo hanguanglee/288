@@ -1,7 +1,1 @@
-{"versions": [{"versiontype": "proofreading",
-		"title": "Cognitive Translatology",
-		"authors": [{"name": "Tra&Co"}],
-	"license": "CC-BY-4.0",
-	"publishedAt": "2020-09-24T16:19:41.000Z"}
-	]
-}
+{"versions": [{"versiontype": "proofreading", "title": "Cognitive Translatology", "authors": [{"name": "Tra&Co"}], "license": "CC-BY-4.0", "publishedAt": "2020-09-24T16:19:41.000Z"}, {"versiontype": "first_edition", "title": "Cognitive Translatology", "authors": [{"name": "Tra&Co"}], "license": "CC-BY-4.0", "publishedAt": "2021-05-28T10:02:28.678530"}]}
